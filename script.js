@@ -33,21 +33,26 @@ function playRound(playerSelection, computerSelection)
     if (playerSelection.toLowerCase() !== "rock" && playerSelection.toLowerCase() !== "paper"  && playerSelection.toLowerCase() !== "scissors")
     {
         alert("Invalid choice please choose between Rock, Paper, and Scissors");
-        return;
+        restartGame();
+        throw Error("Wrong Input");
     }
     else if (playerSelection.toLowerCase() === computerSelection)
     {
         alert(`Tie! both picked ${capitalize(computerSelection)}`);
+        playerWins++;
+        computerWins++
     }
     else if (playerSelection.toLowerCase() === "rock")
     {
         if (computerSelection === "scissors")
         {
             alert("You Win! Rock beats Scissors");
+            playerWins++;
         }
         else if (computerSelection === "paper")
         {
             alert("You Lose! Paper beats Rock");
+            computerWins++;
         }
     }
     else if (playerSelection.toLowerCase() === "paper")
@@ -55,10 +60,12 @@ function playRound(playerSelection, computerSelection)
         if (computerSelection === "scissors")
         {
             alert("You Lose! Scissors beats Paper");
+            computerWins++;
         }
         else if (computerSelection === "rock")
         {
             alert("You Win! Paper beats Rock");
+            playerWins++;
         }
     }
     else if (playerSelection.toLowerCase() === "scissors")
@@ -66,13 +73,20 @@ function playRound(playerSelection, computerSelection)
         if (computerSelection === "rock")
         {
             alert("You Lose! Rock beats Scissors");
+            playerWins++;
         }
         else if (computerSelection === "paper")
         {
             alert("You Win! Scissors beats Paper");
+            computerWins++;
         }
     }
 }
+
+let playerWins = 0;
+let computerWins = 0;
+
+let continueGame = true;
 
 // Start a game of rock paper scissors
 function playGame()
@@ -80,6 +94,14 @@ function playGame()
     // Play a game of rock paper scissors
     alert("This is a game of Rock, Paper, and Scissors\n\nPlay against the computer by choosing between: \nRock, Paper, and Scissors");
     let rounds = Number(prompt("How many rounds would you like to play?"));
+
+    if (isNaN(rounds) || rounds === 0) 
+    {
+        alert("Invalid choice please choose a number greater than 1");
+        restartGame();
+        throw Error("Wrong Input");
+    }
+
     let currentRound = 0
     
     while (currentRound < rounds)
@@ -87,6 +109,45 @@ function playGame()
         playRound(getPlayerChoice(), getComputerChoice());
         currentRound++;
     }
+
+    alert(`Final Score\n\nPlayer:   ${playerWins}\nComputer:    ${computerWins}`);
+    
+    if (playerWins > computerWins)
+    {
+        alert("Player wins the game!");
+    }
+    else if (playerWins < computerWins)
+    {
+        alert("Computer wins the game!");
+    }
+    else
+    {
+        alert("It's a tie!");
+    }
+
+    restartGame();
 }
 
-playGame();
+function restartGame()
+{
+    restart = prompt("Play Again? Yes or No");
+    switch (restart.toLowerCase())
+    {
+        case "yes":
+            continueGame = true;
+            break;
+        case "no":
+            continueGame = false;
+            break;
+        default:
+            continueGame = false;
+            return;
+    }
+}
+
+while (continueGame)
+{
+    playerWins = 0;
+    computerWins = 0;
+    playGame();
+}
