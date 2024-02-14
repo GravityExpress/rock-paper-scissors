@@ -2,6 +2,17 @@
 function getComputerChoice()
 {
     // Randomly select rock, paper, or scissors
+    randomizer = Math.floor(Math.random() * 3) + 1;
+
+    switch (randomizer)
+    {
+        case 1:
+            return computerChoice = "rock";
+        case 2:
+            return computerChoice = "paper";
+        case 3:
+            return computerChoice = "scissors";
+    }
 }
 
 // Plays a round of rock paper scissors
