@@ -73,12 +73,12 @@ function playRound(playerSelection, computerSelection)
         if (computerSelection === "rock")
         {
             alert("You Lose! Rock beats Scissors");
-            playerWins++;
+            computerWins++;
         }
         else if (computerSelection === "paper")
         {
             alert("You Win! Scissors beats Paper");
-            computerWins++;
+            playerWins++;
         }
     }
 }
