@@ -2,7 +2,7 @@
 function getComputerChoice()
 {
     // Randomly select rock, paper, or scissors
-    randomizer = Math.floor(Math.random() * 3) + 1;
+    let randomizer = Math.floor(Math.random() * 3) + 1;
 
     switch (randomizer)
     {
@@ -25,4 +25,5 @@ function playRound(playerSelection, computerSelection)
 function playGame()
 {
     // Play a game of rock paper scissors
+
 }
