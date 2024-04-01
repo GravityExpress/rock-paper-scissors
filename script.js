@@ -24,21 +24,9 @@ function getPlayerChoice()
 // Plays a round of rock paper scissors
 function playRound(playerSelection, computerSelection)
 {
-    // Capitalizes a word
-    capitalize = word => {
-        return word.substr(0,1).toUpperCase().concat(word.substr(1).toLowerCase());
-    };
-
-    // Play a single round
-    if (playerSelection.toLowerCase() !== "rock" && playerSelection.toLowerCase() !== "paper"  && playerSelection.toLowerCase() !== "scissors")
+    if (playerSelection.toLowerCase() === computerSelection)
     {
-        alert("Invalid choice please choose between Rock, Paper, and Scissors");
-        restartGame();
-        throw Error("Wrong Input");
-    }
-    else if (playerSelection.toLowerCase() === computerSelection)
-    {
-        alert(`Tie! both picked ${capitalize(computerSelection)}`);
+        results.textContent = `Tie! both picked ${computerSelection}`;
         playerWins++;
         computerWins++
     }
@@ -46,12 +34,12 @@ function playRound(playerSelection, computerSelection)
     {
         if (computerSelection === "scissors")
         {
-            alert("You Win! Rock beats Scissors");
+            results.textContent = "You Win! Rock beats Scissors";
             playerWins++;
         }
         else if (computerSelection === "paper")
         {
-            alert("You Lose! Paper beats Rock");
+            results.textContent = "You Lose! Paper beats Rock";
             computerWins++;
         }
     }
@@ -59,12 +47,12 @@ function playRound(playerSelection, computerSelection)
     {
         if (computerSelection === "scissors")
         {
-            alert("You Lose! Scissors beats Paper");
+            results.textContent = "You Lose! Scissors beats Paper";
             computerWins++;
         }
         else if (computerSelection === "rock")
         {
-            alert("You Win! Paper beats Rock");
+            results.textContent = "You Win! Paper beats Rock";
             playerWins++;
         }
     }
@@ -72,82 +60,72 @@ function playRound(playerSelection, computerSelection)
     {
         if (computerSelection === "rock")
         {
-            alert("You Lose! Rock beats Scissors");
+            results.textContent = "You Lose! Rock beats Scissors";
             computerWins++;
         }
         else if (computerSelection === "paper")
         {
-            alert("You Win! Scissors beats Paper");
+            results.textContent = "You Win! Scissors beats Paper";
             playerWins++;
         }
+    }
+    scoreRound();
+    scorePlayers();
+}
+
+function scorePlayers ()
+{
+    if (playerWins === 5 && computerWins === 5)
+    {
+        results.textContent += "\nIt's a tie!";
+        return continueGame = false;
+    }
+    else if (playerWins === 5)
+    {
+        results.textContent += "\nPlayer wins the game!";
+        return continueGame = false;
+    }
+    else if (computerWins === 5)
+    {
+        results.textContent += "\nComputer wins the game!";
+        return continueGame = false;
     }
 }
 
 let playerWins = 0;
 let computerWins = 0;
-
 let continueGame = true;
 
-// Start a game of rock paper scissors
-function playGame()
-{
-    // Play a game of rock paper scissors
-    alert("This is a game of Rock, Paper, and Scissors\n\nPlay against the computer by choosing between: \nRock, Paper, and Scissors");
-    let rounds = Number(prompt("How many rounds would you like to play?"));
+const rockbtn = document.querySelector('#rock');
+const paperbtn = document.querySelector('#paper');
+const scissorsbtn = document.querySelector('#scissors');
 
-    if (isNaN(rounds) || rounds === 0) 
-    {
-        alert("Invalid choice please choose a number greater than 1");
-        restartGame();
-        throw Error("Wrong Input");
-    }
+const results = document.querySelector('#results');
+const scores = document.querySelector('#scores');
 
-    let currentRound = 0
-    
-    while (currentRound < rounds)
-    {
-        playRound(getPlayerChoice(), getComputerChoice());
-        currentRound++;
-    }
+const scoreRound = () => {
+    scores.textContent = `Score\n\nPlayer:   ${playerWins}\nComputer:    ${computerWins}`;
+};
 
-    alert(`Final Score\n\nPlayer:   ${playerWins}\nComputer:    ${computerWins}`);
-    
-    if (playerWins > computerWins)
-    {
-        alert("Player wins the game!");
-    }
-    else if (playerWins < computerWins)
-    {
-        alert("Computer wins the game!");
-    }
-    else
-    {
-        alert("It's a tie!");
-    }
+scoreRound();
 
-    restartGame();
-}
-
-function restartGame()
-{
-    restart = prompt("Play Again? Yes or No");
-    switch (restart.toLowerCase())
+rockbtn.addEventListener("click", () => {
+    if (continueGame)
     {
-        case "yes":
-            continueGame = true;
-            break;
-        case "no":
-            continueGame = false;
-            break;
-        default:
-            continueGame = false;
-            return;
+        playRound(rockbtn.name, getComputerChoice());
     }
-}
+});
 
-while (continueGame)
-{
-    playerWins = 0;
-    computerWins = 0;
-    playGame();
-}
+paperbtn.addEventListener("click", () => {
+    if (continueGame)
+    {
+        playRound(paperbtn.name, getComputerChoice());
+    }
+});
+
+scissorsbtn.addEventListener("click", () => {
+    if (continueGame)
+    {
+        playRound(scissorsbtn.name, getComputerChoice());
+    }
+});
